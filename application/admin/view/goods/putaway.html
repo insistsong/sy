@@ -1,0 +1,94 @@
+<div class="content">
+        
+    <div class="header">
+      
+        <h1 class="page-title">商品上架</h1>
+    </div>
+        
+    <ul class="breadcrumb">
+        <li><a href="__ROOT_URL__/index/home">首页</a> <span class="divider">/</span></li>
+        <li class="active">商品上架</li>
+    </ul>
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            
+          <form class="offset1" method="POST" action="__ROOT_URL__/goods/upload" enctype="multipart/form-data">
+              <br>
+              <br>
+
+              <div class="form-group">
+                <label for="addName">商品名称</label>
+                <input type="text" class="form-control" id="addName" placeholder="请输入商品名称" name="name">
+              </div>
+
+              <br>
+              <div class="form-group">
+                <label for="addDescription">描述</label>
+                <input type="text" class="form-control" id="addDescription" placeholder="请输入商品描述" name="description">
+              </div>
+
+              <br>
+              <div class="form-group">
+                <label for="addMoney">价格</label>
+                <input type="number" class="form-control" id="addMoney" placeholder="请输入商品价格" name="money" step="0.1" min="0">
+              </div>
+
+
+
+              <br>
+              <div class="form-group">
+                <label for="tag">添加标签</label>
+                <br>
+                生鲜:<input type="radio" name="tag" value='0'>
+                熟食:<input type="radio" name="tag" value='1'>
+                调料:<input type="radio" name="tag" value='2'>
+                厨具:<input type="radio" name="tag" value='3'>
+                其他:<input type="radio" name="tag" value='4'>
+              </div>
+
+              <br>
+              <div class="form-group">
+                <label for="addNum" >库存</label>
+                <input type="number" class="form-control" id="addNum" placeholder="请输入商品库存(1 到 199)之间" min="1" max="199" name="num">
+              </div>
+
+              <br>
+              <div class="form-group">
+                <label>运费状态</label>
+                不包邮<input type="radio" name="delivery_money" value='0'>  
+                包邮<input type="radio" name="delivery_money" value='1'>
+              </div>
+              
+              <br>
+              <div class="form-group">
+                <label for="addsale">优惠价格</label>
+                <input type="number" class="form-control" id="addsale" placeholder="售价=原价 - 优惠价格 |默认原价" name="sale" step="0.1" min='0.0'>
+              </div>
+             
+              <br>
+              <div class="form-group">
+
+                <label for="addFile">上传图片</label>
+                <input type="file" id="addFile" name="file">
+
+              </div>
+              <br>
+              <button type="submit" class="btn btn-default">上架</button>
+
+          </form>
+
+
+                      
+    <footer>
+        <hr>
+        
+        <p class="pull-right">Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+        
+        <p>&copy; 2012 <a href="#" target="_blank">Portnine</a></p>
+    </footer>
+                  
+        </div>
+    </div>
+</div>
