@@ -1,0 +1,27 @@
+<?php
+namespace app\index\model;
+
+use think\Model;
+use traits\model\SoftDelete;
+use think\Paginator;
+
+class Pic_comment extends Model
+{
+	use SoftDelete;
+	protected $deletetime = 'delete_time';
+	protected $autoWriteTimestamp = true;
+	public function getCreateTimeAttr($value)
+	{
+		return date('Y-m-d H:i:s',$value);
+	}
+	public function saveComment($params)
+	{
+		$data = self::create($params);
+		return $data;
+	}
+	static function selectComment($id)
+	{
+		$data = self::where('pic_id',$id)->select();
+		return $data;
+	}
+}

@@ -1,0 +1,122 @@
+  <link rel="stylesheet" href="__STATIC_URL__/login/css/amazeui.min.css">
+  <link rel="stylesheet" href="__STATIC_URL__/login/css/app.css">
+</head>
+<body>
+<div class="am-g">
+  <!-- LOGO -->
+  <div class="am-u-sm-12 am-text-center" >
+     <i class="am-icon-twitch myapp-login-logo"></i>
+  </div>
+  <!-- 登陆框 -->
+  <div class="am-u-sm-11 am-u-lg-6 am-u-lg-centered am-u-sm-centered">
+  <form class="am-form" action={:url('index/auth/doLogin')} method='post' onsubmit="return false;">
+    <fieldset class="myapp-login-form am-form-set">
+    <div class="am-form-group am-form-icon">
+      <i class="am-icon-envelope"></i>
+      <input type="text" class="myapp-login-input-text am-form-field" id='email' name='email' placeholder="请输入您的账号">
+    </div>
+    <div class="am-u-sm-12 am-text-right am-u-lg-12 notice1" style='height:20px' ></div>
+    <div class="am-form-group am-form-icon">
+      <i class="am-icon-lock"></i>
+      <input type="password" class="myapp-login-input-text am-form-field" id='password' name='password' placeholder="密码至少6个字符">
+    </div>
+    <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:20px' ></div>
+    </fieldset>
+    <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block " onclick="return login()">登录</button>
+
+  </form>
+  <div style='height:20px;'></div>
+   <div class='am-text-left'><button type="button" class="am-u-lg-3 am-u-sm-3 am-btn am-btn-default am-round">修改密码</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="am-u-lg-3 am-u-sm-3 am-btn am-btn-default am-round">忘记密码</button><button type="button" class="am-u-lg-3 am-u-sm-5 am-btn am-btn-default am-round"><a href="{:url('index/auth/register')}">未注册,点这里</button></div>
+  </div>
+
+                          <script type="text/javascript">
+
+                          function login()
+                                {
+
+                                  //console.log($('form').attr('action'));
+                        //console.log($('form').serialize());
+                                    var email = $('#email');
+                                    var password = $('#password');
+                            
+                                
+
+                                    if (email.val() == '')
+                                    {
+                                        //console.log($('.notice'));
+                                        $('.notice1').html('<font style="color:red;">请填写email</font>');
+                                    }
+                                    if(password.val() == '')
+                                    {
+                                        $('.notice2').html('<font style="color:red">请填写密码</font>');
+                                    }
+                                    email.keyup(function()
+                                        {
+                                            $('.notice1').html('');
+                                        });
+                                    password.keyup(function()
+                                        {
+                                            $('.notice2').html('');
+                                        });
+                      if(email.val() != '' && password.val() != ''){
+                             // console.log('你可以提交了');
+                              var email = $('#email').val();
+                              var password = $('#password').val();
+                                          //console.log(email);
+                                          //console.log($('form').attr('action'));
+                                                         // return false;
+                                  $.post($('form').attr('action'), {email:email, password:password}, function(data){
+                                //console.log(data);
+                                switch(data.status)
+                                {
+                                   case 1:
+                                    location.href = '{:url("/index/index/index")}';
+                                    break;
+                                  case 3:
+                                    $('.notice1').html('<font style="color:red;">没有此用户</font>');
+                                    return false;
+                                    break;
+                                  case 2:
+                                    $('.notice2').html('<font style="color:red;">密码错误</font>');
+                                    return false;
+                                    break;
+                                 
+                                }
+                              }, 'json');
+                            return false;    
+                      }else{
+                          return false;
+                      }
+                    return false;
+                  }
+                        </script>
+
+  <div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
+    <hr class="myapp-login-form-hr" />
+    <span class="myapp-login-form-hr-font">第三方登陆</span>
+  </div>
+
+  <div class="am-u-sm-12 am-text-center am-u-lg-6 am-u-lg-centered myapp-login-form-listico" >
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-primary am-icon-qq"></i>
+     </div>
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-danger am-icon-weibo"></i>
+     </div>
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-success am-icon-weixin"></i>
+     </div>
+  </div>
+
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="__STATIC_URL__/login/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__STATIC_URL__/login/js/amazeui.min.js"></script>
+<script src="__STATIC_URL__/login/js/app.js"></script>

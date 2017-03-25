@@ -1,0 +1,194 @@
+
+    <style type="text/css">
+        .page ul{
+            float:left;
+            list-style: none;
+        }
+        .page ul li{
+            float:left;
+            margin-right:20px;
+        }
+    </style>
+   </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li class="am-active"><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+            </ul>
+         {if empty($Think.session.user)}
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+<div data-am-sticky="{top:300}">
+  <!-- <button class="am-btn am-btn-primary">上传</button> -->
+  <a href={:url('index/user/upload')}><button class="am-btn am-btn-primary  am-round" data-am-collapse="{target: '#collapse-nav'}">+<i class="am-icon-"></i></button></a>
+
+</div>
+<!--banner-->
+
+   <!--  <div class="am-u-sm-12 am-hide-lg">
+        <div class="tag bgtag">
+            <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
+                <h2 class="am-titlebar-title ">
+                    热门标签
+                </h2>
+            </div>
+            <ul>
+                <li class="active"><a href="#">的房间打开</a></li>
+                <li><a href="#">阿斯达</a></li>
+                <li><a href="#">恩恩</a></li>
+                <li><a href="#">十二分</a></li>
+                <li><a href="#">爱妃</a></li>
+                <li><a href="#">而非</a></li>
+                <li><a href="#">为非</a></li>
+                <li><a href="#">二位</a></li>
+                <li><a href="#">维吾尔</a></li>
+                <li><a href="#">玩儿玩儿</a></li>
+            </ul>
+            <div class="am-cf"></div>
+        </div>
+    </div>
+     -->
+
+
+
+<div class="am-g am-container padding-none">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $pic as $key=>$value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">
+                                <img src={$value['picture'][0]} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+
+
+                   
+
+                <ul data-am-widget="pagination" class=" page am-pagination am-pagination-default">
+
+                   {$list->render()}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                资深美食加粗爱好者
+            </h2>
+            <nav class="am-titlebar-nav">
+                <a href="#more">more &raquo;</a>
+            </nav>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default right-bg" data-am-scrollspy="{animation:'fade'}">
+                <ul class="am-list"  >
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                        <div class="am-u-sm-4 am-list-thumb">
+                            <a href="http://www.douban.com/online/11624755/">
+                                <img src="__STATIC_URL__/assets/Temp-images/face.jpg" class="face"/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-8 am-list-main">
+                            <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                            <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+                        </div>
+                    </li>
+                    <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                        <div class="am-u-sm-4 am-list-thumb">
+                            <a href="http://www.douban.com/online/11624755/">
+                                <img src="__STATIC_URL__/assets/Temp-images/face.jpg" class="face"/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-8 am-list-main">
+                            <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                            <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                        </div>
+                    </li>
+                    <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                        <div class="am-u-sm-4 am-list-thumb">
+                            <a href="http://www.douban.com/online/11624755/">
+                                <img src="__STATIC_URL__/assets/Temp-images/face.jpg" class="face"/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-8 am-list-main">
+                            <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                            <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                        </div>
+                    </li>
+                </ul>
+        </div>
+        
+</div>
+
+</div>

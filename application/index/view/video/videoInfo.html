@@ -1,0 +1,308 @@
+
+     
+      <link rel="stylesheet" href="__STATIC_URL__/pinglun/css/semantic.css" type="text/css" />
+        <link rel="stylesheet" href="__STATIC_URL__/pinglun/css/zyComment.css" type="text/css" />
+        <style type="text/css" media="print, screen">  
+            label {
+                font-weight: bold;
+            }
+            a {
+                font-family: Microsoft YaHei;
+            }
+            #articleComment {
+                width: 600px;
+                height: auto;
+
+                overflow: auto;
+            }
+        </style> 
+
+ </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+               <li class=""><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href={:url('index/auth/store')}>商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+                 <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
+      <div class="am-form-group">
+        <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+      </div>
+    </form>
+            </ul>
+         {if empty($Think.session.user)}
+         <div class='denglu' name=0></div>
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            <div class='denglu' name=1></div>
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+<div class="am-g am-container">
+    <div class="am-u-sm-12  am-u-md-8 am-u-lg-8">
+        <div class="newstitles">
+            <h2>{$data['title']}</h2>
+            <a href="{:url('index/auth/userInfo')}?id={$user['user_id']}">
+            <img src="{$user['picture']}" class="face"></a>
+            <a href="{:url('index/auth/userInfo')}?id={$user['user_id']}"><span>{$user['user_name']}</span></a>
+            <i class='am-icon-clock-o'></i>：{$data['create_time']} 
+            <div am-u-lg-12 am-u-sm-12> 
+            <i class='am-icon-book lookPic'  name={$data['video_id']}></i>：<span id='lookVideo'>{$data['look']}</span>      &nbsp;&nbsp;&nbsp;&nbsp; <i class='am-icon-tag'></i>：{$data['tag']}    
+            </div>
+        </div>
+
+
+            <div class='am-u-sm-centered'>
+                <video controls='' class='am-text-left' src="{$data['video']}"></video>
+             </div>
+            <div class="contents">
+                <p dir="ltr"><b>视频描述 : </b>{$data['description']}</p>
+            </div>
+
+        {if !empty($Think.session.user)}
+        <div class='am-u-lg-12'>
+        <!-- 判断是否赞过 -->
+            {if $zan == 1}
+            <i style='color:red;' name={$data['video_id']} class='dianzan am-icon-thumbs-o-up'></i>：<span id='dianzan'>{$data['zan']}</span>
+            {else}
+             <i style='' name={$data['video_id']} class='dianzan am-icon-thumbs-o-up'></i>：<span id='dianzan'>{$data['zan']}</span>
+            {/if}
+            &nbsp;&nbsp;&nbsp;&nbsp; 
+            <i class='pinglunNum am-icon-commenting'></i>:<span id='pinglunNum'>{$commentNum}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <!-- 判断是否收藏过 -->
+             {if $collect == 1}
+                 <i class='am-icon-star shoucang' name={$data['video_id']} style='color:red;'></i>：<span id='shoucang'>{$data['collect']}</span>
+            {else}
+                <i class='am-icon-star shoucang' name={$data['video_id']} style=''></i>：<span id='shoucang'>{$data['collect']}</span>
+            {/if}
+
+
+        </div>
+        {/if}
+        <div class='am-u-lg-12' style='height:10px;'></div>
+        <!-- 处理点赞 -->
+        <script type="text/javascript">
+            // console.log($('.dianzan').attr('name'));
+            //console.log($('#dianzan').html());
+           console.log($('.dianzan').attr('style'));
+            $('.dianzan').click(function(){
+                if (($('.dianzan').attr('style') == undefined) ||($('.dianzan').attr('style') ==''))
+                {
+                    $('.dianzan').prop('style','color:red');
+                    //console.log($('.dianzan').attr('style'));
+                    $.post('{:url("/index/video/zanAdd")}',{id:$('.dianzan').attr('name')},function(data){
+                        $('#dianzan').html(data);
+                    });
+
+                }else{
+                    $('.dianzan').prop('style','');
+                    //console.log($('.dianzan').attr('style'));
+                    $.post('{:url("/index/video/zanDel")}',{id:$('.dianzan').attr('name')},function(data){
+                        $('#dianzan').html(data);
+                    });
+                }
+                
+            });
+
+
+        </script>
+
+        <!-- 处理收藏 -->
+                <script type="text/javascript">
+            // console.log($('.dianzan').attr('name'));
+            //console.log($('#dianzan').html());
+           console.log($('.shoucang').attr('style'));
+            $('.shoucang').click(function(){
+                if (($('.shoucang').attr('style') == undefined) ||($('.shoucang').attr('style') ==''))
+                {
+                    $('.shoucang').prop('style','color:red');
+                    //console.log($('.dianzan').attr('style'));
+                    $.post('{:url("/index/video/collectAdd")}',{id:$('.shoucang').attr('name')},function(data){
+                        $('#shoucang').html(data);
+                    });
+
+                }else{
+                    $('.shoucang').prop('style','');
+                    //console.log($('.dianzan').attr('style'));
+                    $.post('{:url("/index/video/collectDel")}',{id:$('.shoucang').attr('name')},function(data){
+                        $('#shoucang').html(data);
+                    });
+                }
+                
+            });
+
+
+        </script>
+
+
+        <div class='am-u-lg-12'>
+        {if $commentNum == 0}
+        <h1>还没有人留下脚印</h1>
+        {else}
+            {foreach $comment as $key=>$value}
+            <article class="am-comment">
+              <a href="#link-to-user-home">
+                <img src={$value['picture']} alt="" class="am-comment-avatar" width="48" height="48"/>
+              </a>
+
+              <div class="am-comment-main">
+                <header class="am-comment-hd">
+                  <!--<h3 class="am-comment-title">评论标题</h3>-->
+                  <div class="am-comment-meta">
+                    <a href="#link-to-user" class="am-comment-author">{$value['username']}</a>
+                    评论于 <time>{$value['create_time']}</time>
+                  </div>
+                </header>
+
+                <div class="am-comment-bd">
+                  {$value['comment']}
+                </div>
+              </div>
+            </article>
+            <div style='height:10px;'></div>
+            {/foreach}
+        {/if}
+       </div> 
+    <div id="videoComment" class='am-u-lg-12' name={$data['video_id']}>
+        
+    </div>
+        <!-- 评论区 -->
+        <a name='reply'></a>
+        <form class="am-form">
+            <fieldset class='am-u-lg-12' >
+                <div class="am-form-group">
+                  <label for="doc-ta-1">留下你的脚印吧</label>
+                  <textarea class="pinglun" rows="5" id="doc-ta-1"></textarea>
+                  <div class='notice' id='notice'></div>
+                </div>
+             </fieldset>
+        </form>
+
+    <p class='am-u-lg-12'><button onclick="addPing()" class="am-btn am-btn-default">提交</button></p>
+    <script type="text/javascript">
+       
+
+            // console.log(notice);
+            $('.pinglun').keyup(function(){
+                 $('.notice').html('');
+            });
+            //console.log(id);
+        //console.log(ping);
+    function addPing(){
+             var ping = $('.pinglun').val();
+            var id = $('#videoComment').attr('name');
+              //console.log(ping);
+            if (ping == ''){
+                $('.notice').html('<font color="red">请填写评论再点击人家</font>');
+            }else{
+                if ($('.denglu').attr('name') == 0)
+                {
+                    location.href = '{:url("/index/auth/login")}';
+                }
+                $.post("{:url('index/video/comment')}", {id:id,content:ping}, function(data){
+                   if (data == 0){
+                         $('.notice').html('<font color="red">姿势不对，起来重发</font>');
+                   }else{
+                        var num = $('#pinglunNum').html();
+                        num = parseInt(num)+parseInt(1);
+                        $('#pinglunNum').html(num);
+                        //alert(data);
+                        //data = eval('('+ data +')');
+                        //console.log(data);
+                        $('#videoComment').html($('#videoComment').html()+'<article class="am-comment">'+
+                          '<a href="#link-to-user-home">'+
+                            '<img src='+data.picture+' class="am-comment-avatar" width="48" height="48"/>'+
+                          '</a>'+
+
+                          '<div class="am-comment-main">'+
+                            '<header class="am-comment-hd">'+
+                              '<div class="am-comment-meta">'+
+                                '<a href="#link-to-user" class="am-comment-author">'+data.username+'</a>'+
+                                '评论于 <time>'+data.create_time+'</time>'+
+                              '</div>'+
+                            '</header>'+
+
+                            '<div class="am-comment-bd">'+
+                              data.comment+
+                            '</div>'+
+                          '</div>'+
+                        '</article>'+
+                        '<div style="height:10px;"></div>');
+                   }
+                });
+            }
+    }
+        
+    </script>
+
+          
+
+</div>
+</div>
+<script type="text/javascript">
+    $('body').mouseenter(function(){
+         $.post('{:url("/index/video/lookVideo")}',{id:$('.lookVideo').attr('name')},function(data){
+                        $('#lookVideo').html(data);
+                    });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+

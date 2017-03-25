@@ -1,0 +1,196 @@
+ </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li class=""><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+            </ul>
+         {if empty($Think.session.user)}
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+
+<div class="category2top">
+    <div class="am-g am-container userinfo">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 userinfo_left">
+            <div class="am-g">
+                <div class="am-u-md-12 am-u-lg-6 userface">
+                    <img src={$info['picture']}>
+                </div>
+                <div class="am-u-md-12 am-u-lg-6 userin">
+                    <h3>{$info['user_name']}</h3>
+                    <h4 class='am-show-sm-only'>
+                        {if empty($info['description'])}
+                            您还没有简介，试着添加一下吧
+                        {else}
+                            简介：{$info['description']}
+                        {/if}
+                    </h4>
+                    <div class='am-hide-sm-only'> 
+                        <p><a href={:url('index/user/selfInfo')}>发布<span class='selfInfo' name={$info['user_id']} style="margin-right:20px;">{$push}</a></span>
+                       <a href={:url('index/user/selfInfo')}>积分<span style="margin-right:20px;">{$info['grade']}</span></a></p>
+                        <p><a href={:url('index/user/selfInfo')}>粉丝<span style="margin-right:20px;">{$fans}</span></a>
+                        <a href={:url('index/user/selfInfo')}>关注<span style="margin-right:20px;">{$follow}</span></a></p>
+                        <p><a href={:url('index/user/selfInfo')}>收藏<span style="margin-right:20px;">{$collectNum}</span></a>
+                        <a href={:url('index/user/selfInfo')}>好友<span style="margin-right:20px;">{$friend}</span></a></p>
+                    </div>
+                    <div class='am-show-sm-only'>
+                         <p><a href={:url('index/user/selfInfo')}>发布<span class='selfInfo' name={$info['user_id']} style="margin-right:20px;">{$push}</a></span>
+                       <a href={:url('index/user/selfInfo')}>积分<span style="margin-right:20px;">{$info['grade']}</span></a>
+                        <a href={:url('index/user/selfInfo')}>粉丝<span style="margin-right:20px;">{$fans}</span></a>
+                        <a href={:url('index/user/selfInfo')}>关注<span style="margin-right:20px;">{$follow}</span></a>
+                        <a href={:url('index/user/selfInfo')}>收藏<span style="margin-right:20px;">{$collectNum}</span></a>
+                        <a href={:url('index/user/selfInfo')}>好友<span style="margin-right:20px;">{$friend}</span></a></p>
+                    </div>
+                            <form action={:url('index/user/savePro')} method='post' enctype='multipart/form-data'>
+                                        <div class="am-form-group am-form-file">
+                                            <button type="button" class="am-form-file am-form-group am-btn am-btn-warning" style="margin: 0 auto; margin-top: 10px">
+                                              <i class="am-icon-cloud-upload"></i> 更换头像</button>
+                                            <input id="doc-form-file" type="file" name="picture" multiple>
+                                        </div>
+                                        <div id="file-list"></div>
+                                        <script type="text/javascript">
+                                          $(function() {
+                                            $('#doc-form-file').on('change', function() {
+                                              var fileNames = '';
+                                              $.each(this.files, function() {
+                                                fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                              });
+                                              $('#file-list').html(fileNames);
+                                            });
+                                          });
+                                        </script>
+
+                                       
+                </div>
+            </div>
+          </div>
+
+                 </div>
+                      <div class="am-u-sm-0 am-u-md-12 am-u-lg-4 am-show-lg-only userinfo_center">
+                          {if empty($info['description'])}
+                              您还没有简介，试着添加一下吧
+                          {else}
+                              简介：{$info['description']}
+                          {/if}
+                        </div>
+
+                    </div>
+
+                        <div class="am-g" id='jutineirong'>
+                            <div class="am-u-sm-0 am-u-md-2 am-u-lg-3">&nbsp;</div>
+                            <div class="am-u-sm-12 am-u-md-8 am-u-lg-centered am-u-lg-6">
+                                <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+                                    <div class="am-list-news-bd">
+                                        <ul class="am-list">
+                                        <div class="am-input-group am-input-group-primary">
+                                              <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                                              <input type="text" name='user_name' class="am-form-field" placeholder="可以在此修改用户名">
+                                            </div>
+                                               <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                           <div class="am-input-group am-input-group-primary">
+                                              <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                                              <input type="text" name='true_name' class="am-form-field" placeholder="真实姓名">
+                                            </div>
+                                            <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-success">
+                                              <span class="am-input-group-label"><i class="am-icon-question am-icon-fw"></i></span>
+                                              <input type="text" name='problem' class="am-form-field" placeholder="密保问题">
+                                            </div>
+                                             <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-waring">
+                                              <span class="am-input-group-label"><i class="am-icon-envelope am-icon-fw"></i></span>
+                                              <input type="text" name='answer' class="am-form-field" placeholder="密保答案">
+                                            </div>
+                                           <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-primary">
+                                              <span class="am-input-group-label"><i class="am-icon-home am-icon-fw"></i></span>
+                                              <input type="text" name='address' class="am-form-field" placeholder="地址">
+                                            </div>
+                                           
+                     
+
+                                           <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-secondary">
+                                              <span class="am-input-group-label"><i class="am-icon-mobile-phone am-icon-fw"></i></span>
+                                              <input type="text" name='phone' class="am-form-field" placeholder="手机号">
+                                            </div>
+                                           <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-success">
+                                              <span class="am-input-group-label"><i class="am-icon-qq am-icon-fw"></i></span>
+                                              <input type="text" name='qq' class="am-form-field" placeholder="QQ">
+                                            </div>
+                                             <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-waring">
+                                              <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                                              <input type="text" name='description' class="am-form-field" placeholder="个人简介">
+                                            </div>
+                                            <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-waring">
+                                              <span class="am-input-group-label"><i class="am-icon-mars am-icon-fw"></i></span>
+                                                <select name='sex' data-am-selected="{btnWidth: '100%', btnSize: 'lg', btnStyle: ''}">
+                                                  <option value="1">boy</option>
+                                                  <option value="2">girl</option>
+                                                </select>
+                                            </div>
+                                            <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                            <div class="am-input-group am-input-group-danger">
+                                              <span class="am-input-group-label"><i class="am-icon-birthday-cake am-icon-fw"></i></span>
+                                              <input type="text" name='birthday' class="am-form-field" placeholder="日历组件" data-am-datepicker readonly required />
+                                            </div>
+                                          
+                                           
+                                            <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:10px' ></div>
+                                             <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block " onclick="">设置</button>
+                                    </form>
+                </ul>      
+    </div>
+    <script type="text/javascript">
+
+      // $('.pushInfo').click(function(){
+
+      //   var id= $('.pushInfo').attr('name');
+      //   $.post("{:url('index/user/pushInfo')}",{id:id},function(data){
+      //       console.log(eval('('+data+')'));
+      //   });
+      // });
+    </script>

@@ -1,0 +1,402 @@
+ </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li class=""><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+            </ul>
+         {if empty($Think.session.user)}
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+
+<div class="category2top">
+    <div class="am-g am-container userinfo">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 userinfo_left">
+            <div class="am-g">
+                <div class="am-u-md-12 am-u-lg-6 userface">
+                    <img src={$info['picture']}>
+                </div>
+                <div class="am-u-md-12 am-u-lg-6 userin">
+                    <h3>{$info['user_name']}</h3>
+          
+                    <div class='am-hide-sm-only'> 
+                        <p>发布<span class='pushInfo' name={$info['user_id']} style="margin-right:20px;">{$push}</span>积分<span style="margin-right:20px;">{$info['grade']}</span></p>
+                        <p>粉丝<span style="margin-right:20px;">{$fans}</span>关注<span style="margin-right:20px;">{$follow}</span></p>
+                        <p>收藏<span style="margin-right:20px;">{$collectNum}</span>好友<span style="margin-right:20px;">{$friend}</span></p>
+                    </div>
+                    <div class='am-show-sm-only'>
+                         <p>发布<span  class='pushInfo' name={$info['user_id']} style="margin-right:20px;">{$push}</span>积分<span style="margin-right:20px;">{$info['grade']}</span>粉丝<span style="margin-right:20px;">{$fans}</span>关注<span style="margin-right:20px;">{$follow}</span>收藏<span style="margin-right:20px;">{$collectNum}</span>好友<span style="margin-right:20px;">{$friend}</span></p>
+                    </div>
+                            
+                </div>
+            </div>
+          </div>
+
+ </div>
+ </div>
+<div class="am-tabs" id="doc-my-tabs">
+  <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
+    <li class="am-active"><a href="">发表</a></li>
+    <li><a href="">收藏</a></li>
+    <li><a href="">关注</a></li>
+    <li><a href="">粉丝</a></li>
+    <li><a href="">好友</a></li>
+  </ul>
+  <div class="am-tabs-bd">
+    <div class="am-tab-panel am-active">
+        <div class="am-g am-container padding-none">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                发表过的图片
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $pic as $key=>$value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">
+                                <img src={$value['picture'][0]} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+  
+  <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                发表过的文章
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $art as $value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a>
+                                <img src={$value['picture']} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/article/artInfo')}?id={$value['article_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                发表过的视频
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $video as $value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a>
+                                <img src={$value['picture']} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/video/videoInfo')}?id={$value['video_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+</div>
+
+
+
+
+</div>           
+
+
+
+    </div>
+    <div class="am-tab-panel">
+        
+  <div class="am-g am-container padding-none">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                收藏的图片
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $collectPicture as $key=>$value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">
+                                <img src={$value['picture'][0]} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+  
+  <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                收藏的文章
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $collectArticle as $value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a>
+                                <img src={$value['picture']} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/article/artInfo')}?id={$value['article_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                收藏的视频
+            </h2>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default ">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {foreach $collectVideo as $value}
+
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" style="border-top: 0px">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a>
+                                <img src={$value['picture']} class='am-img-thumbnail' alt={$value['title']}/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 class="am-list-item-hd"><a href="{:url('index/video/videoInfo')}?id={$value['video_id']}">{$value['title']}</a></h1>
+
+                            <div class="am-list-item-text">{$value["description"]}</div>
+
+                        </div>
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+                </ul>
+            </div>
+        </div>
+</div>
+
+
+
+
+</div>           
+    </div>
+    <div class="am-tab-panel">
+        <div style='height:20px;'></div>
+<div id="category_top">
+    {if $follow == 0}
+    <h1 style='color:white;'>高冷君，你还没有去添加关注(⊙o⊙)</h1>
+    {else}
+    <div class="am-container" >
+        <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-thumbnails">
+        {foreach $followInfo as $key=>$value}
+            <li>
+                <a href="{:url('index/auth/userInfo')}?id={$value['user_id']}">
+                <div class="ctl active">
+                    <img src={$value['picture']}>
+                    <h3>{$value['user_name']}</h3>
+                    <p>{$value['description']}</p>
+                </div>
+                <button type="button" class="am-btn am-btn-primary">关照他家吃的</button>
+                </a>
+            </li>
+        {/foreach}
+        </ul>
+
+    </div>
+    {/if}
+
+</div>
+
+    </div>
+    <div class="am-tab-panel">
+        <div style='height:20px;'></div>
+<div id="category_top">
+    
+    <div class="am-container" >
+        <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-thumbnails">
+         {if $fans == 0}
+            <h1 style='color:white;'>高冷君，你还没有去被关注(⊙o⊙)</h1>
+         {else}
+        {foreach $fansInfo as $key=>$value}
+            <li>
+                <a href="{:url('index/auth/userInfo')}?id={$value['user_id']}">
+                <div class="ctl active">
+                    <img src={$value['picture']}>
+                    <h3>{$value['user_name']}</h3>
+                    <p>{$value['description']}</p>
+                </div>
+                <button type="button" class="am-btn am-btn-primary">瞅瞅有啥好吃的</button>
+                </a>
+            </li>
+        {/foreach}
+        {/if}
+        </ul>
+
+    </div>
+
+</div>
+
+    </div>
+    <div class="am-tab-panel">
+        <div style='height:20px;'></div>
+        <div id="category_top">
+            
+            <div class="am-container" >
+                <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-thumbnails">
+                 {if $friend == 0}
+                    <h1 style='color:white;'>高冷君，你还没有互关好友(⊙o⊙)!</h1>
+                 {else}
+                {foreach $friendInfo as $key=>$value}
+                    <li>
+                        <a href="{:url('index/auth/userInfo')}?id={$value['user_id']}">
+                        <div class="ctl active">
+                            <img src={$value['picture']}>
+                            <h3>{$value['user_name']}</h3>
+                            <p>{$value['description']}</p>
+                        </div>
+                        <button type="button" class="am-btn am-btn-primary">去好友家串个门</button>
+                        </a>
+                    </li>
+                {/foreach}
+                {/if}
+                </ul>
+
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function() {
+    $('#doc-my-tabs').tabs();
+  })
+</script>
+
+</div>
+  

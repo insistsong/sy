@@ -1,0 +1,411 @@
+   </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+            </ul>
+         {if empty($Think.session.user)}
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+<div data-am-sticky="{top:300}">
+  <!-- <button class="am-btn am-btn-primary">上传</button> -->
+  <a href={:url('index/user/upload')}><button class="am-btn am-btn-primary  am-round" data-am-collapse="{target: '#collapse-nav'}">我也要上传<i class="am-icon-"></i></button></a>
+
+</div>
+<!--banner-->
+<div class="banner">
+    <div class="am-g am-container">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
+            <div data-am-widget="slider" class="am-slider am-slider-c1" data-am-slider='{"directionNav":false}' >
+                <ul class="am-slides">
+                    <li>
+                        <a href="events_show.html"><img src="__STATIC_URL__/assets/Temp-images/bb1.jpg"></a>
+                        <div class="am-slider-desc">远方 有一个地方 那里种有我们的梦想</div>
+
+                    </li>
+                    <li>
+                        <a href="events_show.html"><img src="__STATIC_URL__/assets/Temp-images/bb2.jpg"></a>
+                        <div class="am-slider-desc">某天 也许会相遇 相遇在这个好地方</div>
+
+                    </li>
+                    <li>
+                        <a href="events_show.html"><img src="__STATIC_URL__/assets/Temp-images/bb3.jpg"></a>
+                        <div class="am-slider-desc">不要太担心 只因为我相信 终会走过这条遥远的道路</div>
+
+                    </li>
+                    <li>
+                        <a href="events_show.html"><img src="__STATIC_URL__/assets/Temp-images/bb4.jpg"></a>
+                        <div class="am-slider-desc">OH PARA PARADISE 是否那么重要 你是否那么地遥远</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="am-u-sm-0 am-u-md-0 am-u-lg-4 padding-none">
+            <div class="star am-container"><span><img src="__STATIC_URL__/assets/images/star.png">照片风云榜</span></div>
+            <ul class="padding-none am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-2 am-gallery-overlay" data-am-gallery="{ pureview: true }" >
+              {foreach $pic as $key=>$value}   
+                <li>
+                    <div class="am-gallery-item">
+                        <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}">
+                            <img src={$value['picture'][0]} alt="{$value['title']}"/>
+                            <h3 class="am-gallery-title">{$value['title']}</h3>
+                            <div class="am-gallery-desc">{$value['create_time']}</div>
+                        </a>
+                    </div>
+                </li>
+           {/foreach}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--banner2-->
+
+<!--news-->
+<div class="am-g am-container newatype">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 oh">
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="border-bottom: 0px; margin-bottom: -10px">
+            <h2 class="am-titlebar-title ">
+                热门文章
+            </h2>
+            <nav class="am-titlebar-nav">
+                <a href={:url('index/article/index')}>more &raquo;</a>
+            </nav>
+        </div>
+
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default news">
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+           {foreach $article as $key=>$value} 
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left" data-am-scrollspy="{animation:'fade'}">
+                        <div class="am-u-sm-5 am-list-thumb">
+                            <a href="{:url('index/article/artInfo')}?id={$value['article_id']}">
+                                <img src={$value['picture']} alt="{$value['title']}"/>
+                            </a>
+
+                        </div>
+                        <div class=" am-u-sm-7 am-list-main">
+                            <h1 style='color:#e2652f;' class="am-list-item-hd"><a href="{:url('index/article/artInfo')}?id={$value['article_id']}">{$value['title']}</a></h1>
+                            <div class="am-list-item-text">{$value['description']}</div>
+                        </div>
+
+                    </li>
+                    <div class="newsico am-fr">
+                        <i class="am-icon-clock-o">{$value['create_time']}</i>
+                        <i class="am-icon-hand-pointer-o">{$value['zan']}</i>
+                    </div>
+                {/foreach}
+
+
+                </ul>
+            </div>
+            <a href="#"><img src="__STATIC_URL__/assets/Temp-images/ad2.png" class="am-img-responsive" width="100%"/></a>
+
+            <div class="">
+                <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+                    <h2 class="am-titlebar-title ">
+                        热门视频
+                    </h2>
+                    <nav class="am-titlebar-nav">
+                        <a href="#more" onclick="$('.case').hide();$('#youxi').show();">中餐呦</a>
+                        <a href="#more" onclick="$('.case').hide();$('#yingxiao').show();">西餐呦</a>
+                        <a href="#more" onclick="$('.case').hide();$('#gongju').show();">零食呦</a>
+                    </nav>
+                </div>
+
+
+                <div id="youxi" class="case am-animation-slide-left">
+                    <ul class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-4 am-gallery-overlay" data-am-gallery="{ pureview: true }" >
+                    {foreach $video as $value}
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="{:url('index/video/videoInfo')}?id={$value['video_id']}">
+                                    <img style='width:180px;height:180px;' src="{$value['picture']}" data-replace-img="{$value['picture']}" alt="{$value['title']}"/>
+                                    <h3 class="am-gallery-title">{$value['title']}</h3>
+                                    <div class="am-gallery-desc">{$value['create_time']}</div>
+                                </a>
+                            </div>
+                        </li>
+                    {/foreach}
+                    
+                    </ul>
+                </div>
+
+                <div id="yingxiao" class="case am-animation-slide-right dn">
+                    <ul class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-4 am-gallery-overlay" data-am-gallery="{ pureview: true }" >
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="__STATIC_URL__/assets/Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="__STATIC_URL__/assets/Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="__STATIC_URL__/assets/Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="__STATIC_URL__/assets/Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                    
+                    </ul>
+                </div>
+
+
+                <div id="gongju" class="dn case am-animation-slide-right">
+                    <ul class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-4 am-gallery-overlay" data-am-gallery="{ pureview: true }" >
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="__STATIC_URL__/assets/Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="am-gallery-item">
+                                <a href="Temp-images/dd.jpg">
+                                    <img src="__STATIC_URL__/assets/Temp-images/cc.jpg" data-replace-img="Temp-images/dd.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+                                    <div class="am-gallery-desc">2375-09-26</div>
+                                </a>
+                            </div>
+                        </li>
+                      
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                资深美食加粗爱好者
+            </h2>
+            <nav class="am-titlebar-nav">
+                <a href="#more">more &raquo;</a>
+            </nav>
+        </div>
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default right-bg" data-am-scrollspy="{animation:'fade'}">
+                <ul class="am-list"  >
+                {foreach $user as $value}
+                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                        <div class="am-u-sm-4 am-list-thumb">
+                            <a href="{:url('index/auth/userInfo')}?id={$value['user_id']}">
+                                <img src={$value['picture']} class="face"/>
+                            </a>
+                        </div>
+
+                        <div class=" am-u-sm-8 am-list-main">
+                            <h3 class="am-list-item-hd"><a href="{:url('index/auth/userInfo')}?id={$value['user_id']}">{$value['user_name']}</a></h3>
+                            {if !empty($value['description'])}
+                            <div class="am-list-item-text">{$value['description']}</div>
+                            {else}
+                            <div class="am-list-item-text">她/他只顾着吃都没传简介</div>
+                            {/if}
+                        </div>
+                    </li>
+                    <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                {/foreach}
+                </ul>
+        </div>
+
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                广告合作商
+            </h2>
+            <nav class="am-titlebar-nav">
+                <a href="#more">more &raquo;</a>
+            </nav>
+        </div>
+
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default right-bg" data-am-scrollspy="{animation:'fade'}">
+            <ul class="am-list">
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/pic5.jpg" class="face"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+                    </div>
+                </li>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/pic5.jpg" class="face"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                    </div>
+                </li>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/pic5.jpg" class="face"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+            <h2 class="am-titlebar-title ">
+                新进吃货
+            </h2>
+            <nav class="am-titlebar-nav">
+                <a href="#more">more &raquo;</a>
+            </nav>
+        </div>
+
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default right-bg" data-am-scrollspy="{animation:'fade'}">
+            <ul class="am-list"  >
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/face.jpg"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+                    </div>
+                </li>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/face.jpg"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                    </div>
+                </li>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                    <div class="am-u-sm-4 am-list-thumb">
+                        <a href="http://www.douban.com/online/11624755/">
+                            <img src="__STATIC_URL__/assets/Temp-images/face.jpg"/>
+                        </a>
+                    </div>
+
+                    <div class=" am-u-sm-8 am-list-main">
+                        <h3 class="am-list-item-hd"><a href="http://www.douban.com/online/11624755/">勾三古寺</a></h3>
+
+                        <div class="am-list-item-text">代码压缩和最小化。在这里，我们为你收集了9个最好的JavaScript压缩工具将帮</div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+

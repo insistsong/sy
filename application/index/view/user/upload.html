@@ -1,0 +1,637 @@
+
+    <!-- <link rel="stylesheet" href="__STATIC_URL__/upload/dist/amazeui.min.css"/>  -->
+    <link rel="stylesheet" href="__STATIC_URL__/upload/dist/amazeui.upload.css"/>
+    <link rel="stylesheet" href="__STATIC_URL__/bootstrap/index.css"/>
+    <script src="__STATIC_URL__/upload/dist/jquery.min.js"></script> 
+    <script src="__STATIC_URL__/upload/dist/amazeui.min.js"></script> 
+    <script src="__STATIC_URL__/upload/dist/amazeui.upload.js"></script>
+    <script src="__STATIC_URL__/upload/dist/amazeui.upload.template.js"></script>
+    <script src="__STATIC_URL__/upload/dist/amazeui.upload.event.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__STATIC_URL__/editor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__STATIC_URL__/editor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="__STATIC_URL__/editor/lang/zh-cn/zh-cn.js"></script>
+   </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header" style='background:#df6538;'>
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+               <li class=""><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+            </ul>
+         {if empty($Think.session.user)}
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+        
+    </div>
+</header>
+<div class="category2top">
+    <div class="am-g am-container userinfo">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 userinfo_left">
+            <div class="am-g">
+                <div class="am-u-md-12 am-u-lg-6 userface">
+                    <img src={$info['picture']}>
+                </div>
+                <div class="am-u-md-12 am-u-lg-6 userin">
+                    <h3>{$info['user_name']}</h3>
+                    <h4 class='am-show-sm-only'>
+                        {if empty($info['description'])}
+                            您还没有简介，试着添加一下吧
+                        {else}
+                            简介：{$info['description']}
+                        {/if}
+                    </h4>
+                    <div class='am-hide-sm-only'> 
+                        <p>发布<span style="margin-right:20px;">9</span>积分<span style="margin-right:20px;">{$info['grade']}</span></p>
+                        <p>粉丝<span style="margin-right:20px;">{$info['fans']}</span>关注<span style="margin-right:20px;">{$info['follow']}</span></p>
+                        <p>收藏<span style="margin-right:20px;">{$info['collect']}</span></p>
+                    </div>
+                    <div class='am-show-sm-only'>
+                         <p>发布<span style="margin-right:20px;">9</span>积分<span style="margin-right:20px;">{$info['grade']}</span>粉丝<span style="margin-right:20px;">{$info['fans']}</span>关注<span style="margin-right:20px;">{$info['follow']}</span>收藏<span style="margin-right:20px;">{$info['collect']}</span></p>
+                    </div>                                       
+                </div>
+            </div>
+          </div>
+<div class="am-u-sm-0 am-u-md-12 am-u-lg-4 am-show-lg-only userinfo_center">
+                          {if empty($info['description'])}
+                              您还没有简介，试着添加一下吧
+                          {else}
+                              简介：{$info['description']}
+                          {/if}
+                        </div>
+
+                    </div>
+                 </div>
+                      
+
+
+    
+            <div class="am-u-sm-0 am-u-md-2 am-u-lg-3">&nbsp;</div>
+                    <div class="am-u-sm-12 am-u-md-8 am-u-lg-centered am-u-lg-12">
+                    <div data-am-widget="tabs" class="am-tabs am-tabs-d2" >
+          <ul class="am-tabs-nav am-cf ">
+              <li class="am-active"><a href="[data-tab-panel-0]">图片</a></li>
+              <li class=""><a href="[data-tab-panel-1]">文章</a></li>
+              <li class=""><a href="[data-tab-panel-2]">视频</a></li>
+          </ul>
+      <div class="am-tabs-bd">
+          <div data-tab-panel-0 class="am-tab-panel am-active">
+           
+                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 oh">
+                        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="border-bottom: 10px; margin-bottom: 10px">
+                            <h2 class="am-titlebar-title ">
+                                上传图片
+                            </h2>
+                            
+                           </div>
+                      <form action={:url('index/user/doPic')} method='post' enctype='multipart/form-data' class="am-form" id="ue-form">
+                           <p><input type="text" class="am-form-field am-round" name='title' placeholder="图片标题"/></p>
+                             <div class="am-form-group am-form-file">
+                                <div class="am-form-group am-form-file">
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的图片</button>
+                                  <input id="doc-form-file" type="file" name="picture[]" multiple>
+                                </div>
+                                <div id="file-list"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list').html(fileNames);
+                                    });
+                                  });
+                                </script>
+
+                                <div class="am-form-group am-form-file">
+                                  <button type="button" name='image[]' class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload" name='image[]'></i> 选择要上传的图片</button>
+                                  <input id="doc-form-file2" type="file" name='picture[]' multiple>
+                                </div>
+                                <div id="file-list2"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file2').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list2').html(fileNames);
+                                    });
+                                  });
+                                </script>
+                                <div class="am-form-group am-form-file">
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的图片</button>
+                                  <input id="doc-form-file3" type="file" name='picture[]' multiple>
+                                </div>
+                                <div id="file-list3"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file3').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list3').html(fileNames);
+                                    });
+                                  });
+                                </script>
+
+
+                                <div class="am-form-group am-form-file">
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的图片</button>
+                                  <input id="doc-form-file4" type="file" name='picture[]' multiple>
+                                </div>
+                                <div id="file-list4"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file4').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list').html(fileNames);
+                                    });
+                                  });
+                                </script>
+                            <p><input type="text" class="am-form-field am-round" name='description' placeholder="图片描述"/></p>
+                            <div class="am-form-group">
+                            标签选择：
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="1" name="tag"> 中餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="2" name="tag"> 西餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="3" name="tag"> 饮品
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="4" name="tag"> 小吃
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="5" name="tag"> 爆炒
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="6" name="tag"> 面食
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="7" name="tag">汤类
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="8" name="tag"> 油炸
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="9" name="tag"> 糕点
+                              </label>
+                                   <label class="am-radio-inline">
+                                <input type="radio" value="10" name="tag"> 水果
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="11" name="tag"> 烧烤
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="12" name="tag"> 烤肉
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="13" name="tag"> 火锅
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="14" name="tag"> 野菜
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="15" name="tag"> 自助餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="16" name="tag"> 面包
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="17" name="tag"> 清真
+                              </label>
+
+                              <label class="am-radio-inline">
+                                <input type="radio" value="18" name="tag"> 快餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="19" name="tag"> 料理
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="20" name="tag"> 东南亚菜
+                              </label>
+                           </div>
+                              <div class="am-form-group">
+                                <div class="am-u-sm-10 am-u-sm-offset-0">
+                                  <input type="submit" class="am-btn am-btn-default" value='上传图片喽~~'>
+                                </div>
+                            </div>
+                        </form> 
+                   </div>
+                </div>          
+        </div>
+
+
+
+
+
+
+
+          <div data-tab-panel-1 class="am-tab-panel ">
+                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 oh">
+                        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="border-bottom: 10px; margin-bottom: 10px">
+                            <h2 class="am-titlebar-title ">
+                                上传文章
+                            </h2>
+                            
+                  </div>
+                      <form action={:url('index/user/doArticle')} method='post' enctype='multipart/form-data' class="am-form" id="ue-form">
+                      <p><input type="text" class="am-form-field am-round" name='title' placeholder="文章标题"/></p>
+                             
+                            <p><input type="text" class="am-form-field am-round" name='description' placeholder="文章简介"/></p>
+                            <div class="am-form-group am-form-file">
+                                  文章封面：<button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的封面</button>
+                                  <input id="doc-form-file21" type="file" name='artPic' multiple>
+                                </div>
+                                <div id="file-list21"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file21').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list21').html(fileNames);
+                                    });
+                                  });
+                                </script>
+                            <div class="am-form-group">
+                            标签选择：
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="1" name="tag"> 中餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="2" name="tag"> 西餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="3" name="tag"> 饮品
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="4" name="tag"> 小吃
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="5" name="tag"> 爆炒
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="6" name="tag"> 面食
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="7" name="tag">汤类
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="8" name="tag"> 油炸
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="9" name="tag"> 糕点
+                              </label>
+                                    <label class="am-radio-inline">
+                                <input type="radio" value="10" name="tag"> 水果
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="11" name="tag"> 烧烤
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="12" name="tag"> 烤肉
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="13" name="tag"> 火锅
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="14" name="tag"> 野菜
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="15" name="tag"> 自助餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="16" name="tag"> 面包
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="17" name="tag"> 清真
+                              </label>
+
+                              <label class="am-radio-inline">
+                                <input type="radio" value="18" name="tag"> 快餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="19" name="tag"> 料理
+                              </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" value="20" name="tag"> 东南亚菜
+                              </label>
+                            </div>
+                              <script id="editor" type="text/plain" name='content' style="width:1024px;height:500px;"></script>
+                              <script type="text/javascript">
+
+                        //实例化编辑器
+                        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+                        var ue = UE.getEditor('editor');
+
+
+                        function isFocus(e){
+                            alert(UE.getEditor('editor').isFocus());
+                            UE.dom.domUtils.preventDefault(e)
+                        }
+                        function setblur(e){
+                            UE.getEditor('editor').blur();
+                            UE.dom.domUtils.preventDefault(e)
+                        }
+                        function insertHtml() {
+                            var value = prompt('插入html代码', '');
+                            UE.getEditor('editor').execCommand('insertHtml', value)
+                        }
+                        function createEditor() {
+                            enableBtn();
+                            UE.getEditor('editor');
+                        }
+                        function getAllHtml() {
+                            alert(UE.getEditor('editor').getAllHtml())
+                        }
+                        function getContent() {
+                            var arr = [];
+                            arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+                            arr.push("内容为：");
+                            arr.push(UE.getEditor('editor').getContent());
+                            alert(arr.join("\n"));
+                        }
+                        function getPlainTxt() {
+                            var arr = [];
+                            arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+                            arr.push("内容为：");
+                            arr.push(UE.getEditor('editor').getPlainTxt());
+                            alert(arr.join('\n'))
+                        }
+                        function setContent(isAppendTo) {
+                            var arr = [];
+                            arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+                            UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+                            alert(arr.join("\n"));
+                        }
+                        function setDisabled() {
+                            UE.getEditor('editor').setDisabled('fullscreen');
+                            disableBtn("enable");
+                        }
+
+                        function setEnabled() {
+                            UE.getEditor('editor').setEnabled();
+                            enableBtn();
+                        }
+
+                        function getText() {
+                            //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+                            var range = UE.getEditor('editor').selection.getRange();
+                            range.select();
+                            var txt = UE.getEditor('editor').selection.getText();
+                            alert(txt)
+                        }
+
+                        function getContentTxt() {
+                            var arr = [];
+                            arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+                            arr.push("编辑器的纯文本内容为：");
+                            arr.push(UE.getEditor('editor').getContentTxt());
+                            alert(arr.join("\n"));
+                        }
+                        function hasContent() {
+                            var arr = [];
+                            arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+                            arr.push("判断结果为：");
+                            arr.push(UE.getEditor('editor').hasContents());
+                            alert(arr.join("\n"));
+                        }
+                        function setFocus() {
+                            UE.getEditor('editor').focus();
+                        }
+                        function deleteEditor() {
+                            disableBtn();
+                            UE.getEditor('editor').destroy();
+                        }
+                        function disableBtn(str) {
+                            var div = document.getElementById('btns');
+                            var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                            for (var i = 0, btn; btn = btns[i++];) {
+                                if (btn.id == str) {
+                                    UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                                } else {
+                                    btn.setAttribute("disabled", "true");
+                                }
+                            }
+                        }
+                        function enableBtn() {
+                            var div = document.getElementById('btns');
+                            var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                            for (var i = 0, btn; btn = btns[i++];) {
+                                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                            }
+                        }
+
+                        function getLocalData () {
+                            alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+                        }
+
+                        function clearLocalData () {
+                            UE.getEditor('editor').execCommand( "clearlocaldata" );
+                            alert("已清空草稿箱")
+                        }
+                    </script>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-0">
+                              <button type="submit" class="am-btn am-btn-default">点击上传</button>
+                            </div>
+                          </div>
+                        </form>
+
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+
+          <div data-tab-panel-2 class="am-tab-panel ">
+               <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 oh">
+                        <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="border-bottom: 10px; margin-bottom: 10px">
+                            <h2 class="am-titlebar-title ">
+                                上传视频
+                            </h2>
+                            
+                  </div>
+                      <form action={:url('index/user/doVideo')} method='post' enctype='multipart/form-data' class="am-form" id="ue-form">
+                      <p><input type="text" class="am-form-field am-round" name='title' placeholder="视频标题"/></p>
+                    
+                             <div class="am-form-group am-form-file">
+                                  视频封面：
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的图封面</button>
+                                  <input id="doc-form-file31" type="file" name="picture" multiple>
+                                </div>
+                                <div id="file-list31"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file31').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list31').html(fileNames);
+                                    });
+                                  });
+                                </script>
+                                  <div class="am-form-group am-form-file">
+                                  视频选择：
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 选择要上传的视频</button>
+                                  <input id="doc-form-file32" type="file" name="video" multiple>
+                                </div>
+                                <div id="file-list32"></div>
+                                <script>
+                                  $(function() {
+                                    $('#doc-form-file32').on('change', function() {
+                                      var fileNames = '';
+                                      $.each(this.files, function() {
+                                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                                      });
+                                      $('#file-list32').html(fileNames);
+                                    });
+                                  });
+                                </script>
+                            </div>
+                             
+                            <p><input type="text" name='description' class="am-form-field am-round" placeholder="视频描述"/></p>
+                             <div class="am-form-group">
+                            标签选择：
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="1" name="tag"> 中餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="2" name="tag"> 西餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio"  value="3" name="tag"> 饮品
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="4" name="tag"> 小吃
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="5" name="tag"> 爆炒
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="6" name="tag"> 面食
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="7" name="tag">汤类
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="8" name="tag"> 油炸
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="9" name="tag"> 糕点
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="10" name="tag"> 水果
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="11" name="tag"> 烧烤
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="12" name="tag"> 烤肉
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="13" name="tag"> 火锅
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="14" name="tag"> 野菜
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="15" name="tag"> 自助餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="16" name="tag"> 面包
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="17" name="tag"> 清真
+                              </label>
+
+                              <label class="am-radio-inline">
+                                <input type="radio" value="18" name="tag"> 快餐
+                              </label>
+                              <label class="am-radio-inline">
+                                <input type="radio" value="19" name="tag"> 料理
+                              </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" value="20" name="tag"> 东南亚菜
+                              </label>
+                            </div>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-0">
+                              <button type="submit" class="am-btn am-btn-default">点击上传</button>
+                            </div>
+                          </div>
+                        </form>
+
+
+
+              </div>
+          </div>
+      </div>
+ 
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" >
+    <a href="#top" title="回到顶部">
+        <span class="am-gotop-title">回到顶部</span>
+        <i class="am-gotop-icon am-icon-chevron-up"></i>
+    </a>
+</div>

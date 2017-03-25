@@ -1,0 +1,221 @@
+ <link rel="stylesheet" href="__STATIC_URL__/login/css/amazeui.min.css">
+  <link rel="stylesheet" href="__STATIC_URL__/login/css/app.css">
+</head>
+<body>
+<div class="am-g">
+  <!-- LOGO -->
+  <div class="am-u-sm-12 am-text-center" >
+     <i class="am-icon-twitch myapp-login-logo"></i>
+  </div>
+  <!-- 登陆框 -->
+  <div class="am-u-sm-11 am-u-lg-6 am-u-lg-centered am-u-sm-centered">
+  <form class="am-form" action={:url('index/auth/doRegister')} method='post' onsubmit="return false;">
+    <fieldset class="myapp-login-form am-form-set">
+    <div class="am-form-group am-form-icon">
+      <i class="am-icon-envelope"></i>
+      <input type="text" class="myapp-login-input-text am-form-field" name-'email' id='email' placeholder="请输入您的邮箱">
+    </div>
+      <div class="am-u-sm-12 am-text-right am-u-lg-12 notice1" style='height:20px' ></div>
+    <div class="am-form-group am-form-icon">
+      <i class="am-icon-user"></i>
+      <input type="text" class="myapp-login-input-text am-form-field" name='username' id='username' placeholder="请输入您的用户名">
+    </div>
+    <div class="am-u-sm-12 am-text-right am-u-lg-12 notice2" style='height:20px' ></div>
+    <div class="am-form-group am-form-icon">
+      <i class="am-icon-lock"></i>
+      <input type="password" class="myapp-login-input-text am-form-field" name='password' id='password' placeholder="请输入您的密码">
+    </div>
+    <div class="am-u-sm-12 am-text-right am-u-lg-12 notice3" style='height:20px' ></div>
+   <div class="am-form-group am-form-icon">
+      <i class="am-icon-lock"></i>
+      <input type="password" class="myapp-login-input-text am-form-field" name='rePassword' id='rePassword' placeholder="请确认您的密码">
+    </div>
+    <div class="am-u-sm-12 am-text-right am-u-lg-12 notice4" style='height:20px' ></div>
+    </fieldset>
+    <button type="submit" onclick="return register()" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">注册</button>
+  </form>
+  <div style='height:20px;'></div>
+  <div class='am-text-right'><button type="button" class="am-btn am-btn-default am-round"><a href={:url('index/auth/login')}>已有账号,点这里</button>
+  </div>
+        <script type="text/javascript">
+                            var email = $('#email');
+                            //console.log(email2);
+                            var username = $('#username');
+                            var password = $('#password');
+                            //console.log(password2);
+                            var rePassword = $('#rePassword');
+                           email.keyup(function()
+                                  {
+                                      
+                                      $('.notice1').html('');
+                                  });
+                           username.keyup(function()
+                                  {
+                                      
+                                      $('.notice2').html('');
+                                  });
+                         password.keyup(function()
+                                      {
+                                          //console.log('---------');
+                                          //console.log(password2.val());
+                                          $('.notice3').html('');
+                                          if (password.val() !== rePassword.val())
+                                          {
+                                              $('.notice4').html('<font style="color:red;">两次密码输入不一致</font>');
+                                          }else{
+                                            $('.notice4').html(''); 
+                                          }
+                                                     
+                                      });
+                       
+                         rePassword.keyup(function()
+                                  {
+                                          
+                                      $('.notice4').html('');
+                                          if (password.val() !== rePassword.val())
+                                          {
+                                              $('.notice4').html('<font style="color:red;">两次密码输入不一致</font>');
+                                          }else{
+                                             $('.notice4').html('');
+                                          }
+
+                                      });
+                                    
+                        function register()
+                              {
+                               
+                                  //  console.log(rePassword2);                   
+                                  //console.log(username);
+
+                                  if (email.val() == '')
+                                  {
+                                      
+                                      $('.notice1').html('<font style="color:red;">请填写email</font>');
+                                  }
+                                  
+                                  if (username.val() == '')
+                                  {
+                                      
+                                      $('.notice2').html('<font style="color:red;">请填写用户名</font>');
+                                  }
+                                  if(password.val() == '')
+                                  {
+                                      $('.notice3').html('<font style="color:red;">请填写密码</font>');
+                                  }
+                                  if(rePassword.val() == '')
+                                  {
+                                      $('.notice4').html('<font style="color:red;">请确认密码</font>');
+                                  }
+                                  //return false;
+                                  email.keyup(function()
+                                  {
+                                      
+                                      $('.notice1').html('');
+                                  });
+                                  username.keyup(function()
+                                  {
+                                      
+                                      $('.notice2').html('');
+                                  });
+                                  password.keyup(function()
+                                  {                                 
+                                      $('.notice3').html('');
+                                      if (password.val() !== rePassword.val())
+                                          {
+                                              $('.notice4').html('<font style="color:red;">两次密码输入不一致</font>');
+                                              return false;
+                                          }
+
+                                        $('.notice4').html('');
+                                  });
+                                  rePassword.keyup(function()
+                                  {
+                                          
+                                           $('.notice4').html('');
+                                          if (password.val() !== rePassword.val())
+                                          {
+                                              $('.notice4').html('<font style="color:red;">两次密码输入不一致</font>');
+                                              return false;
+                                          }
+                                           $('.notice4').html('');
+
+
+                                    });
+                                  if(email.val() != '' && username.val != '' && password.val() ===rePassword.val()){
+                                      $.post($('form').attr('action'), {email:email.val(),username:username.val(), password:password.val()}, function(data){
+                                        console.log(data);
+                                        //data =  eval('('.data.')');
+                                       // console.log(data.status);
+                                         
+                                             switch(data.status)
+                                              {
+                                                case 0:
+                                                  $('.notice1').html('<font style="color:red;">email设置不符合规范</font>');
+                                                  return false;
+                                                  break;
+                                                case 1:
+                                                    $('.notice2').html('<font style="color:red;">用户名设置不符合规范，应为6-18位之间</font>');
+                                                    return false;
+                                                    break;
+                                                 case 2:
+                                                    $('.notice4').html('<font style="color:red;">密码设置不符合规范，应为6-18位之间</font>');
+                                                    return false;
+                                                    break;
+                                                case 3:
+                                                    $('.notice1').html('<font style="color:red;">此邮箱已被注册</font>');
+                                                    break;
+                                                    return false;
+                                                case 4:
+                                                    alert('注册成功！');
+                                                    setTimeout(function(){
+                                                        location.href = '{:url("/index/index/index")}';
+                                                    }, 1000);
+                                                  //window.location.href='/';
+                                                  break;
+                                                case 5:
+                                                  $('.notice4').html('<font style="color:red;">服务出点小故障，请重试注册</font>');
+                                                  return false;
+                                                  break;
+                                                
+                                              }
+                                          
+
+                               
+                                 }, 'json');
+                                 // return true;
+                                  }else{
+                                      return false;
+                                  }
+                                  
+                                  return false;
+                              }
+                      </script>
+  <div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
+    <hr class="myapp-login-form-hr" />
+    <span class="myapp-login-form-hr-font">第三方登陆</span>
+  </div>
+
+  <div class="am-u-sm-12 am-text-center am-u-lg-6 am-u-lg-centered myapp-login-form-listico" >
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-primary am-icon-qq"></i>
+     </div>
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-danger am-icon-weibo"></i>
+     </div>
+     <div class="am-u-sm-4 am-text-center" >
+     <i class="am-icon-btn am-success am-icon-weixin"></i>
+     </div>
+  </div>
+
+</div>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="__STATIC_URL__/login/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__STATIC_URL__/login/js/amazeui.min.js"></script>
+<script src="__STATIC_URL__/login/js/app.js"></script>

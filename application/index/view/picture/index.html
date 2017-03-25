@@ -1,0 +1,174 @@
+ <style type="text/css">
+    .page ul{
+        list-style: none;
+        float:left;
+    }
+    .page li{
+        list-style: none;
+         float:left;
+        margin-right:20px;
+    }
+</style>
+   </head>
+<body>
+
+<header class="am-topbar am-topbar-fixed-top wos-header">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="#"><img src="__STATIC_URL__/assets/images/header.png" alt=""></a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only"
+                data-am-collapse="{target: '#collapse-head'}">
+            <span class="am-sr-only">导航切换</span>
+            <span class="am-icon-bars"></span>
+        </button>
+
+        <div class="am-collapse am-topbar-collapse" id="collapse-head">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li><a href={:url('index/index/index')}>首页</a></li>
+                <li><a href={:url('index/picture/index')}>图片</a></li>
+                <li><a href={:url('index/article/index')}>文章</a></li>
+                <li><a href={:url('index/video/index')}>视频</a></li>
+                <li><a href="profile.html">商城</a></li>
+             {if !empty($Think.session.user)}
+                <li><a href={:url('index/user/profile')}>个人中心</a></li>
+             {/if}
+         {if empty($Think.session.user)}
+            </ul>
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/auth/login')}>登录</button>
+            </div>
+
+            <div class="am-topbar-right">
+                <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/register')}>注册</a></button>
+            </div>
+        {else}
+            {if $Think.session.user == 'admin123321'}
+             <div class="am-topbar-right">
+                    <button class="am-btn am-btn-default am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span><a href={:url('index/admin/login')}>管理员专用</button>
+                </div>
+                {/if}
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-danger am-right-btn am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> <a href={:url('index/auth/logout')}>退出登录</a></button>
+                </div>
+                
+        {/if}
+            
+        </div>
+    </div>
+</header>
+<div data-am-sticky="{top:300}">
+  <!-- <button class="am-btn am-btn-primary">上传</button> -->
+  <a href={:url('index/user/upload')}><button class="am-btn am-btn-primary  am-round" data-am-collapse="{target: '#collapse-nav'}">我也要上传<i class="am-icon-"></i></button></a>
+
+</div>
+<div class="am-container events">
+   <div id="aaContainer" class='container am-u-lg-offset-1 am-hide-sm'style="width:1000px;height:500px;background:white;color:white;font-family: Arial, Helvetica, sans-serif;font-size:16px;line-height:29px"> 
+    <img src="__STATIC_URL__/assets/Temp-images/head1.jpg"/> 
+    <img src="__STATIC_URL__/assets/Temp-images/head2.jpg"/> 
+    <img src="__STATIC_URL__/assets/Temp-images/head3.jpg"/> 
+    <img src="__STATIC_URL__/assets/Temp-images/head4.jpg"/> 
+    <img src="__STATIC_URL__/assets/Temp-images/head5.jpg" /> 
+    <img src="__STATIC_URL__/assets/Temp-images/head6.jpg"/> 
+
+    </div> 
+    <script> 
+   
+        var rt=new imgRound("aaContainer",400,300,500,80,500,0.005); 
+             setInterval(function(){rt.roundMove()},20) 
+  
+                        function imgRound(id,w,h,x,y,r,dv,rh,ah){ 
+                            if (ah==undefined) ah=1; 
+                            if (rh==undefined) rh=10; 
+                            var dv=dv*ah; //旋转速度 
+                            var pi=3.1415926575; 
+                            var d=pi/2; 
+                            var pd=Math.asin(w/2/r); 
+                            var smove=true; 
+                            var imgArr=new Array(); 
+                            var objectId=id; 
+                            var o=document.getElementById(objectId); 
+                            o.style.position="relative"; 
+                            var arrimg=o.getElementsByTagName("img"); 
+                            var pn=arrimg.length; //图片数量 
+                            var ed=pi*2/pn; 
+                            for (n=0;n<arrimg.length;n++){ 
+                                var lk=arrimg[n].getAttribute("link"); 
+                                if (lk!=null) arrimg[n].setAttribute("title",lk) 
+                                arrimg[n].onclick=function(){ 
+                                    if (this.getAttribute("link")!=null){ 
+                                        if (this.getAttribute("target")!="_blank") window.location=(this.getAttribute("link")) 
+                                        else window.open(this.getAttribute("link")) 
+                                    } 
+                                } 
+                                arrimg[n].onmouseout=function(){smove=true;} 
+                                arrimg[n].onmouseover=function(){smove=false;} 
+                                arrimg[n].style.position="absolute"; 
+                                imgArr.push(arrimg[n]); 
+                            } 
+                             
+                            this.roundMove=function(){ 
+                                for (n=0;n<=pn-1;n++){ 
+                                    var o=imgArr[n]; 
+                                    var ta=Math.sin(d+ed*n),strFilter; 
+                                    if (ta<0) o.style.left=Math.cos(d+ed*n-pd)*r+x+"px"; 
+                                    else o.style.left=Math.cos(d+ed*n+pd)*r+x+"px"; 
+                                    o.style.top=ta*rh+rh+y+"px"; 
+                                    var zoom=Math.abs(Math.sin((d+ed*n)/2+pi/4))*0.5+0.5; 
+                                    o.style.width=Math.abs(Math.cos(d+ed*n+pd)-Math.cos(d+ed*n-pd))*zoom*r+"px"; 
+                                    o.style.height=zoom*h+"px"; 
+                                    if (ta<0) {ta=(ta+1)*80+20;o.style.zIndex=0;} 
+                                    else {ta=100;o.style.zIndex=1} 
+                                    if (o.style.zIndex<=0) strFilter="FlipH(enabled:true)" 
+                                    else strFilter="FlipH(enabled:false)"; 
+                                    strFilter=strFilter+" alpha(opacity="+ta+")"; 
+                                    o.style.opacity=ta/100; 
+                                    o.style.filter=strFilter; 
+                                } 
+                                if (smove) d=d+dv; 
+                            } 
+                        } 
+                    </script> 
+
+</div>
+<div class="star am-container mcenter"><span><img src="__STATIC_URL__/assets/images/star.png">更多美食</span></div>
+<div class="am-container">
+    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-3 am-gallery-default" data-am-gallery="{ pureview: true }" >
+    {foreach $pic as $key=>$value}
+        <li>
+            <div class="am-gallery-item">
+                <a href={$value['picture'][0]} class="">
+                    <img src={$value['picture'][0]}  alt="远方 有一个地方 那里种有我们的梦想"/>
+                    <div class="events-btn">
+                        <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}"><button type="button" class="am-btn am-btn-primary am-round">戳我查看</button></a>
+                    </div>
+                </a>
+            </div>
+        </li>
+    {/foreach}
+    </ul>
+    
+<div class="am-u-lg-offset-5 am-u-sm-offset-3 page" >{$list->render()}</div>
+</div>
+
+
+
+<div class="star am-container mcenter"><span><img src="__STATIC_URL__/assets/images/star.png">最新美食</span></div>
+<div class="am-container">
+    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-gallery-bordered" data-am-gallery="{  }" >
+    {foreach $new as $key=>$value}
+        <li>
+            <div class="am-gallery-item">
+                <a href="{:url('index/picture/picInfo')}?id={$value['pic_id']}" class="">
+                    <img src={$value['picture'][0]} alt={$value['description']}/>
+                    <h3 class="am-gallery-title">{$value['description']}</h3>
+                    <div class="am-gallery-desc"></div>
+                </a>
+            </div>
+        </li>
+        {/foreach}
+    </ul>
+
+</div>
+
