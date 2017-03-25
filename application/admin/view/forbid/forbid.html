@@ -1,1 +1,167 @@
-管理被禁止IP登录的用户;
+<style type="text/css">
+  .forbid {
+    border: 1px solid #ccc;
+  }
+  input {
+    width: 50px;
+  }
+
+</style>
+
+
+<div class="content">
+        
+    <div class="header">
+      
+        <h1 class="page-title">禁用IP</h1>
+    </div>
+        
+    <ul class="breadcrumb">
+        <li><a href="__ROOT_URL__/index/home">首页</a> <span class="divider">/</span></li>
+        <li class="active">禁用IP</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+                      
+
+   
+
+    <div class='well'>   
+      <form class="offset1" method="POST" action="#" >
+
+      <!-- <form class="offset1" method="POST" action="__ROOT_URL__/forbid/add" > -->
+      <table class='table forbid'>
+        <tr >
+          <th>禁用IP地址</th>
+          <th>原因</th>
+          <th></th>
+        </tr>
+       
+        <tr>
+          <td>
+            <input type="number" name="ip0" min='0' max='255' class='ip0'>.
+            <input type="number" name="ip1" min='0' max='255' class='ip1'>.
+            <input type="number" name="ip2" min='0' max='255' class="ip2">.
+            <input type="number" name="ip3" min='0' max='255' class="ip3">
+          </td> 
+          <td>
+            <textarea name="result" class="result"></textarea>
+          </td>
+          <td>
+            <button class='connect' type='submit' onclick="add()">添加</button>
+          </td>
+        </tr>
+       
+      </table>
+      </form>
+    </div>
+    <script type="text/javascript">
+       function add()
+       {
+          var ip = $('.ip0').val()+ '.' + $('.ip1').val() + '.' + $('.ip2').val() + '.' + $('.ip3').val();
+          var result = $('.result').val();
+          // console.log(ip);
+          // console.log(result);
+           $.post("__ROOT_URL__/forbid/add", {ip:ip, result:result}, function(data){
+              console.log(data);
+           },'json');
+       } 
+
+
+    </script>
+
+
+
+    <div class="well">
+        <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>IP</th>
+                <th>原因</th>
+                <th>禁用时间</th>
+                <th>状态</th>
+                <th>改变</th>
+                <th style="width: 26px;"></th>
+              </tr>
+            </thead>
+          <tbody>
+
+            {volist name='list' id='ls'}
+                <tr>
+                    <td>{$ls.ip_id}</td>
+                    <td>{$ls.ip}</td>
+                    <td>{$ls.result}</td>
+                    <td>{$ls.create_time}||</td>
+                    {if $ls.delete_time == 0}
+                    <th class='{$ls.ip_id}'>禁止</th>
+                    {else}
+                    <td>允许</td>
+                    {/if}
+                    <td>
+                        <button onclick="change({$ls.ip_id})">
+                           改为允许
+                        </button>
+                    </td>
+                </tr>
+            {/volist}
+
+
+          </tbody>
+        </table>
+
+    </div>
+
+    <div class="pagination">
+
+      {$page}
+
+    </div>
+    
+    <script type="text/javascript">
+        function change(id)
+        {
+
+            //console.log(id);
+            $.post("__ROOT_URL__/forbid/change",{'ip_id':id},function(){
+
+                // $('."id"').html('20');
+            },'json');
+        }
+    </script>
+
+
+
+
+
+
+
+
+    <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Delete Confirmation</h3>
+        </div>
+        <div class="modal-body">
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+        </div>
+    </div>
+
+
+                      
+    <footer>
+        <hr>
+        
+        <p class="pull-right">Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+        
+        <p>&copy; 2012 <a href="#" target="_blank">Portnine</a></p>
+    </footer>
+                  
+        </div>
+    </div>
+</div>

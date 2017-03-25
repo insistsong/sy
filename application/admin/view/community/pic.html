@@ -1,1 +1,112 @@
-dsafjasdkljfasjfjaskdfjal;
+
+<script src="__STATIC_URL__/admin/layer/layer.js"></script>
+<div class="content">
+        
+    <div class="header">
+      
+        <h1 class="page-title">摄影版图</h1>
+    </div>
+        
+    <ul class="breadcrumb">
+        <li><a href="__ROOT_URL__/index/home">首页</a> <span class="divider">/</span></li>
+        <li class="active">社区管理</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+                      
+    <div class="btn-toolbar">
+        <button class="btn1"> <a href="__ROOT_URL__/user/userlist"><span>用户表</span></a></button>
+        <button class="btn2"> <a href="__ROOT_URL__/user/forbid">违规用户</a></button>
+        
+        <div class="btn-group">
+        </div>
+    </div>
+
+
+
+
+    <div class="well">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>#</th>
+              <th>标题</th>
+              <th>首图</th>
+              <th>标签</th>
+              <th>作者</th>
+              <th>热度</th>
+              <th>查看详细</th>
+              <th>违规删除</th>
+            </tr>
+          </thead>
+          <tbody>
+         
+
+
+            
+
+            {volist name='data' id='pic'} 
+              <tr class='contentList'>
+                <td class='user_id' style="width:40px;">{$pic.pic_id}</td>
+                <td style="width:100px;">{$pic.title}</td>
+                <td style="width:100px; height:100px;"><img src="{$pic.picture}" ></td>
+                <td>{$pic.tag}</td>
+                <td>{$pic.user_id}</td>
+                <td>{$pic.look}</td>
+                <td>
+                  <a href="picinfo?id={$pic.pic_id}"><i class="icon-file" style="font-size: 24px;"></i></a>
+                </td>
+                <td>
+                  <a id="test5" onclick="remove({$pic.pic_id})"><i class="icon-remove" style="font-size: 18px;"></i></a>
+                </td>
+
+              </tr>
+            {/volist}
+          </tbody>
+        </table>
+
+
+    <div class="pagination">
+
+      {$page}
+
+    </div>
+
+    <script type="text/javascript">
+
+    /*
+    id 是得到当前要禁止用户的id
+    status 在弹出框中判断是否删除, 
+    status = 1是确定删除
+    status = 0是取消
+    */
+
+      function remove(id)
+      {
+
+        console.log(id);
+      
+      } 
+
+
+      function info(info)
+      {
+        console.log(info);
+      }
+
+      
+    </script>
+         
+            
+    <footer>
+        <hr>
+        
+        <p class="pull-right">Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+        
+        <p>&copy; 2012 <a href="#" target="_blank">Portnine</a></p>
+    </footer>
+                  
+        </div>
+    </div>
+</div>

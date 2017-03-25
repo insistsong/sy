@@ -5,6 +5,7 @@ use think\Controller;
 
 use app\admin\model\Goods as GoodsModel;
 
+use think\Session;
 
 
 class Goods extends Controller
@@ -44,6 +45,7 @@ class Goods extends Controller
 			$putaway = new GoodsModel;
 	    	$putaway->name 				= $_POST['name'];
 	    	$putaway->description 		= $_POST['description'];
+	    	$putaway->specifications	= $_POST['specifications'];
 	    	$putaway->money 			= $_POST['money'];
 	    	$putaway->tag 				= $_POST['tag'];
 	    	$putaway->num 				= $_POST['num'];

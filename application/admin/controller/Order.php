@@ -5,6 +5,8 @@ use think\Controller;
 
 use think\View;
 
+use think\Session;
+
 class order extends Controller
 {
 	public function order()

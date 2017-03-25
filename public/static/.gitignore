@@ -1,2 +1,9 @@
 *
 !.gitignore
+
+.idea
+composer.lock
+*.log
+uploads
+upload
+runtime

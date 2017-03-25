@@ -41,7 +41,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-
+    
     <link rel="shortcut icon" href="__STATIC_URL__/admin/lib/font-awesome/docs/assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="__STATIC_URL__/admin/lib/font-awesome/docs/assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="__STATIC_URL__/admin/lib/font-awesome/docs/assets/ico/favicon.ico">
@@ -64,14 +64,15 @@
                     <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button" style="font-size: 30px;"><i class='icon-cogs' ></i></a></li>
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> Jack Smith
+                            <i class="icon-user"></i> 
+                                                      {$Request.session.name}
                             <i class="icon-caret-down"></i>
                         </a>
 
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" class="visible-phone" href="#"><i class='icon-cog'>a</i></a></li>
                             <li class="divider visible-phone"></li>
-                            <li><a tabindex="-1" href="sign-in.html">退出</a></li>
+                            <li><a tabindex="-1" href="__ROOT_URL__/index/exit">退出</a></li>
                         </ul>
                     </li>
                     

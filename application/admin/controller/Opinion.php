@@ -3,6 +3,8 @@ namespace app\admin\controller;
 
 use think\Controller;
 
+use think\Session;
+
 class Opinion extends Controller
 {
 	public function solve()

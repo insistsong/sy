@@ -3,6 +3,8 @@ namespace app\admin\controller;
 
 use think\Controller;
 
+use think\Session;
+
 class site extends Controller
 {
 	public function billboard()

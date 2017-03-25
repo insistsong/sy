@@ -1,3 +1,5 @@
+
+<script src="__STATIC_URL__/admin/layer/layer.js"></script>
 <div class="content">
         
     <div class="header">
@@ -14,128 +16,176 @@
         <div class="row-fluid">
                       
     <div class="btn-toolbar">
-        <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
-        <button class="btn">Import</button>
-        <button class="btn">Export</button>
+        <button class="btn1"> <a href="__ROOT_URL__/user/userlist"><span>用户表</span></a></button>
+        <button class="btn2"> <a href="__ROOT_URL__/user/forbid">违规用户</a></button>
+        
         <div class="btn-group">
         </div>
     </div>
+
+
+
+
     <div class="well">
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
+              <td>#</th>
               <th>用户名</th>
               <th>邮箱</th>
-              <th>QQ</th>
-              <th>真实姓名</th>
-              <th>年龄</th>
+              <th>等级</th>
+              <th>状态</th>
               <th style="width: 26px;"></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>the_mark7</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
+         
 
-            <tr>
-              <td>2</td>
-              <td>Ashley</td>
-              <td>Jacobs</td>
-              <td>ash11927</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Audrey</td>
-              <td>Ann</td>
-              <td>audann84</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>John</td>
-              <td>Robinson</td>
-              <td>jr5527</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Aaron</td>
-              <td>Butler</td>
-              <td>aaron_butler</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Chris</td>
-              <td>Albert</td>
-              <td>cab79</td>
-              <td>Mark</td>
-              <td>Tompson</td>
-              <td>
-                  <a href="user.html"><i class="icon-pencil"></i></a>
-                  <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-              </td>
-            </tr>
+
+            
+
+            {volist name='list' id='user'} 
+              <tr class='contentList'>
+                <td class='user_id'>{$user.user_id}</td>
+                <td>{$user.user_name}</td>
+                <td>{$user.email}</td>
+                <td>{$user.grade}</td>
+                <td>{$user.allowlogin}</td>
+                <td>
+                  <a href="useralter?id={$user.user_id}"><i class="icon-pencil"></i></a>
+                  <!-- <a href="#myModal" id='xx'  role="button" data-toggle="modal"><i class="icon-remove"></i></a> -->
+                  <a id="test5" onclick="alter({$user.user_id})"><i class="icon-remove"></i></a>
+
+                </td>
+
+              </tr>
+            {/volist}
+              <tr class="ys">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
           </tbody>
         </table>
-    </div>
+         <!-- {$list->render()} -->
+
     <div class="pagination">
-        <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
+
+      {$page}
+
     </div>
 
-    <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+
+<script type="text/javascript">
+     
+
+      $('#test5').on('click', function(){
+          layer.tips('已经禁止登录', '#test5');
+      });
+
+
+
+  //禁止用户登录的界面
+      function display()
+      {
+        $.get('__ROOT_URL__/user/forbid', function(data){
+
+
+
+
+          var data = eval('('+data+')');
+
+          var sum = data[0].data;
+          var page = data[1];
+          console.log(data);
+          // console.log(page);
+          var html = ' ';
+          $('.pagination').html(' ');
+          $('.contentList').html(' ');
+          $('.ys').html(' ');
+          html = '<table class="table">' +
+          '<thead>' +
+            '<tr>' + 
+              '<td>#</th>' +
+              '<th>用户名</th>' +
+              '<th>邮箱</th>' +
+              '<th>等级</th>' +
+              '<th>状态</th>' +
+              '<th style="width: 26px;"></th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' ;
+          for(var i = 0; i < sum.length; i++)
+          {
+
+             html += 
+                '<tr class="ys">' +
+                '<td >'+sum[i].user_id+'</td>' +
+                '<td>'+sum[i].user_name+'</td>'  +
+                '<td>'+sum[i].email+'</td>' +
+                '<td>'+sum[i].grade+'</td>' +
+                '<td>'+sum[i].allowlogin+'</td>' +
+                '<td>' +
+                  '<a href="useralter?id='+ sum[i].user_id +'"><i class="icon-pencil"></i></a>' + 
+                  '<a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>' +
+                 '</td>' +
+                 '</tr>';
+                  
+
+          }
+          html += 
+          '</tbody>' +
+        '</table>' +
+         '<div class="pagination">' +
+           page +
+        '</div>';
+          console.log($('.table').html(html));  
+        },'json');
+
+      }
+
+</script>
+
+
+   <!--  <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Delete Confirmation</h3>
+            <h3 id="myModalLabel">禁止用户登录</h3>
         </div>
         <div class="modal-body">
-            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>你想禁止该用户登录吗?</p>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="alter(status='0')">取消</button>
+            <button class="btn btn-danger" data-dismiss="modal" onclick="alter(status='1')">确定</button>
         </div>
-    </div>
+    </div> -->
 
+    <script type="text/javascript">
 
+    /*
+    id 是得到当前要禁止用户的id
+    status 在弹出框中判断是否删除, 
+    status = 1是确定删除
+    status = 0是取消
+    */
+
+      function alter(id,status)
+      {
+        console.log(id);
+          $.post('__ROOT_URL__/user/change',{user_id:id}, function(data){
+            location.reload();
+
+          },'json');      
+      }
+
+      
+    </script>
                       
     <footer>
         <hr>

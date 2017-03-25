@@ -1,1 +1,162 @@
-广告管理页面;
+<style type="text/css">
+  .forbid {
+    border: 1px solid #ccc;
+  }
+  input {
+    width: 50px;
+  }
+
+</style>
+
+
+<div class="content">
+        
+    <div class="header">
+      
+        <h1 class="page-title">禁用IP</h1>
+    </div>
+        
+    <ul class="breadcrumb">
+        <li><a href="__ROOT_URL__/index/home">首页</a> <span class="divider">/</span></li>
+        <li class="active">禁用IP</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+                      
+
+   
+
+    <div class='well'>   
+      <form class="offset1" method="POST" action="#" >
+
+      <!-- <form class="offset1" method="POST" action="__ROOT_URL__/forbid/add" > -->
+      <table class='table forbid'>
+        <tr >
+          <th>广告链接</th>
+          <th>图片上传</th>
+          <th>描述</th>
+          <th>联系方式</th>
+          <th>广告价格</th>
+          <th>展示期</th>
+          <th>创建时间</th>
+          <th>价格</th>
+          <th></th>
+        </tr>
+       
+        <tr>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+            <td>
+                <input type="" name="">  
+            </td>
+
+            <td>
+                <button onclick="">提交</button>
+            </td>
+        </tr>
+       
+      </table>
+      </form>
+    </div>
+    <script type="text/javascript">
+      
+    </script>
+
+
+
+    <div class="well">
+        <table class="table">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>广告链接</th>
+                  <th>图片上传</th>
+                  <th>描述</th>
+                  <th>联系方式</th>
+                  <th>广告价格</th>
+                  <th>展示期</th>
+                  <th>创建时间</th>
+                  <th>价格</th>
+                  <th>修改</th>
+              </tr>
+            </thead>
+          <tbody>
+
+
+             
+
+
+
+          </tbody>
+        </table>
+
+    </div>
+
+
+    
+    <script type="text/javascript">
+        function change(id)
+        {
+
+            //console.log(id);
+            $.post("__ROOT_URL__/forbid/change",{'ip_id':id},function(){
+
+                // $('."id"').html('20');
+            },'json');
+        }
+    </script>
+
+
+
+
+
+
+
+
+    <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Delete Confirmation</h3>
+        </div>
+        <div class="modal-body">
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+        </div>
+    </div>
+
+
+                      
+    <footer>
+        <hr>
+        
+        <p class="pull-right">Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+        
+        <p>&copy; 2012 <a href="#" target="_blank">Portnine</a></p>
+    </footer>
+                  
+        </div>
+    </div>
+</div>
